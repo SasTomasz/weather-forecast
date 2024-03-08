@@ -2,6 +2,7 @@ import requests
 import streamlit as st
 from http import HTTPStatus
 from models import WeatherData, Hour
+import json
 # This project get data from https://www.visualcrossing.com/
 
 
@@ -23,7 +24,8 @@ def transform_data(data):
                         conditions=y["conditions"],
                         icon=y["icon"])
             hours.append(hour)
-        new_data = WeatherData(datetime=datetime, hours=hours)
+        weather_data = WeatherData(datetime=datetime, hours=hours)
+        new_data = json.dumps(weather_data, default=lambda o: o.__dict__, indent=4)
     return new_data
 
 
@@ -40,5 +42,5 @@ def get_demand_data(period, area):
 
 
 if __name__ == "__main__":
-    weather_data = get_demand_data(2, "Kraków")
-    print(weather_data)
+    user_demand_data = get_demand_data(2, "Kraków")
+    print(user_demand_data)

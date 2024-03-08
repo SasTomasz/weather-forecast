@@ -1,14 +1,27 @@
 from typing import List
 from pydantic import BaseModel
 
+# This is a model of weather data I'd like to use
+# [{
+# 	"datetime": "2024-03-07",
+# 	"hours": [{
+# 		"datetime": "00:00:00",
+# 		"temp": 7.0,
+# 		"conditions": "Rain, Partially cloudy",
+# 		"icon": "rain"
+# 	}]
+# }]
 
-class Hour(BaseModel):
-    datetime: str
-    temp: float
-    conditions: str
-    icon: str
+
+class Hour(object):
+    def __init__(self, datetime: str, temp: float, conditions: str, icon: str):
+        self.datetime = datetime
+        self.temp = temp
+        self.conditions = conditions
+        self.icon = icon
 
 
-class WeatherData(BaseModel):
-    datetime: str
-    hours: List[Hour]
+class WeatherData(object):
+    def __init__(self, datetime: str, hours: List[Hour]):
+        self.datetime = datetime
+        self.hours = hours
