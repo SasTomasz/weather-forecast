@@ -25,12 +25,11 @@ def transform_data(data):
                         icon=y["icon"])
             hours.append(hour)
         weather_data = WeatherData(datetime=datetime, hours=hours)
-        new_data = json.dumps(weather_data, default=lambda o: o.__dict__, indent=4)
-    return new_data
+        new_data.append(weather_data)
+    return json.dumps(new_data, default=lambda o: o.__dict__, indent=4)
 
 
 def get_demand_data(period, area):
-    # TODO: Fix problem with getting data - data from transform_data is only one day
     data = get_data_from_api(period, area)
     if data.status_code == HTTPStatus.OK:
         data = data.json()
@@ -42,5 +41,5 @@ def get_demand_data(period, area):
 
 
 if __name__ == "__main__":
-    user_demand_data = get_demand_data(2, "Kraków")
+    user_demand_data = get_demand_data(5, "Kraków")
     print(user_demand_data)
