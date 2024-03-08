@@ -1,5 +1,4 @@
 from typing import List
-from pydantic import BaseModel
 
 # This is a model of weather data I'd like to use
 # [{
