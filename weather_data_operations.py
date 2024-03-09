@@ -48,25 +48,29 @@ def get_demand_data(period, area):
 
 
 def prepare_data_for_chart(period, area):
-    # TODO: Resolve problem with load DataFrame
     data = get_demand_data(period, area)
-    df = pd.read_json(data)
-    print(df)
+    convert_json_to_csv(data)
+    df = pd.read_csv("./data/weather_data.csv")
+    return df
 
 
 def convert_json_to_csv(json_data):
     json_data = json.loads(json_data)
-    data_file = open("./data/weather_data.csv", "w")
+    data_file = open("./data/weather_data.csv", 'w')
     csv_writer = csv.writer(data_file)
+
+    # Write CSV Header
+    csv_writer.writerow(["date", "time", "temperature", "conditions", "icon"])
+
     for i in json_data:
-        print(i["datetime"])
-        csv_writer.writerows(i)
+        for j in i["hours"]:
+            csv_writer.writerow([i["datetime"],
+                        j["datetime"],
+                        j["temp"],
+                        j["conditions"],
+                        j["icon"]])
     data_file.close()
 
 
 if __name__ == "__main__":
-    user_demand_data = get_demand_data(5, "Kraków")
-    print(user_demand_data)
-    # convert_json_to_csv(user_demand_data)
-    # print(data_for_chart)
-    # prepare_data_for_chart(5, "Kraków")
+    prepare_data_for_chart(5, "Kraków")
