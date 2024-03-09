@@ -7,6 +7,7 @@ import requests
 import streamlit as st
 
 from models import WeatherData, Hour
+import numpy as np
 
 
 # This project get data from https://www.visualcrossing.com/
@@ -50,7 +51,7 @@ def get_demand_data(period, area):
 def prepare_data_for_chart(period, area):
     data = get_demand_data(period, area)
     convert_json_to_csv(data)
-    df = pd.read_csv("./data/weather_data.csv")
+    df = pd.read_csv("./data/weather_data.csv", parse_dates=["datetime"])
     return df
 
 
@@ -60,17 +61,19 @@ def convert_json_to_csv(json_data):
     csv_writer = csv.writer(data_file)
 
     # Write CSV Header
-    csv_writer.writerow(["date", "time", "temperature", "conditions", "icon"])
+    csv_writer.writerow(["datetime", "temperature", "conditions", "icon"])
 
     for i in json_data:
         for j in i["hours"]:
-            csv_writer.writerow([i["datetime"],
-                        j["datetime"],
-                        j["temp"],
-                        j["conditions"],
-                        j["icon"]])
+            csv_writer.writerow([i["datetime"] + " " + j["datetime"],
+                                 j["temp"],
+                                 j["conditions"],
+                                 j["icon"]])
     data_file.close()
 
 
 if __name__ == "__main__":
-    prepare_data_for_chart(5, "Kraków")
+    # data_for_user = prepare_data_for_chart(5, "Kraków")
+    # print(data_for_user)
+    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+    print(chart_data)
