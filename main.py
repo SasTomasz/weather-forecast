@@ -13,5 +13,4 @@ if __name__ == '__main__':
         st.header(f"Temperature for the next {days} in {place}")
         data_for_chart = prepare_data_for_chart(days, place)
         print(data_for_chart.loc[data_for_chart["datetime"] <= "2024-03-09 23:00:00"])
-        # TODO FIX problem doubling data
         st.line_chart(data_for_chart["temperature"])

@@ -22,8 +22,8 @@ def get_data_from_api(area="Kraków"):
 
 def transform_data(data):
     new_data = []
-    hours = []
     for i in data:
+        hours = []
         datetime = i["datetime"]
         for y in i["hours"]:
             hour = Hour(datetime=y["datetime"],
@@ -41,7 +41,6 @@ def get_demand_data(period, area):
     if data.status_code == HTTPStatus.OK:
         data = data.json()
         demand_data = data["days"][:period]
-        # print(f"DEMAND DATA = \n{demand_data}")
         demand_data = transform_data(demand_data)
     else:
         return "There is no data available"
@@ -73,7 +72,5 @@ def convert_json_to_csv(json_data):
 
 
 if __name__ == "__main__":
-    # data_for_user = prepare_data_for_chart(5, "Kraków")
-    # print(data_for_user)
     chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
     print(chart_data)
