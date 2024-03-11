@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 from weather_data_operations import prepare_data_for_chart
 
 if __name__ == '__main__':
@@ -10,7 +9,10 @@ if __name__ == '__main__':
     option = st.selectbox("Select data to view", ("Temperature", "Sky"))
 
     if place:
-        st.header(f"Temperature for the next {days} in {place}")
+        if days > 1:
+            day_str = "days"
+        else:
+            day_str = "day"
+        st.header(f"Temperature for the next {days} {day_str} in {place}")
         data_for_chart = prepare_data_for_chart(days, place)
-        print(data_for_chart.loc[data_for_chart["datetime"] <= "2024-03-09 23:00:00"])
-        st.line_chart(data_for_chart["temperature"])
+        st.line_chart(data_for_chart, x="datetime", y="temperature")
