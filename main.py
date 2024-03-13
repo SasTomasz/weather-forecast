@@ -29,15 +29,16 @@ if __name__ == '__main__':
                 # Different layout idea
 
                 # Grid
-                rows = st.columns([1, 2, 3])
+                rows = st.columns([3, 3, 3, 3])
                 row1 = st.columns(3)
                 row2 = st.columns(3)
                 number = 0
 
-                for col in rows:
-                    tile = col.container(height=120)
-                    tile.write("Text")
-                    tile.image("./icons/rain.png")
+                for i in range(24):
+                    for col in rows:
+                        tile = col.container(height=120)
+                        tile.write("Text")
+                        tile.image("./icons/rain.png")
 
                 # Metric
                 # col1, col2 = st.columns([2, 3])
