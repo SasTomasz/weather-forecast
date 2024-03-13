@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit.components.v1 import html
 
 from weather_data_operations import prepare_data_for_chart
 
@@ -35,8 +36,8 @@ if __name__ == '__main__':
 
                 for col in rows:
                     tile = col.container(height=120)
-                    tile.title(number)
-                    number += 1
+                    tile.write("Text")
+                    tile.image("./icons/rain.png")
 
                 # Metric
                 # col1, col2 = st.columns([2, 3])
