@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit.components.v1 import html
 
 from weather_data_operations import prepare_data_for_chart
 
@@ -26,17 +25,20 @@ if __name__ == '__main__':
                 data_length = len(data_for_icons)
 
                 # Grid
-                rows = st.columns([3, 3, 3])
+                weight = 1
+                rows = st.columns([weight for i in range(6)])
                 index = 0
 
                 for i in range(data_length):
                     for col in rows:
                         if index == data_length - 1:
                             break
-                        date = data_for_icons.loc[index]["datetime"]
+                        data_for_icons["date_str"] = data_for_icons["datetime"].dt.strftime('%a %H:%M')
+                        date = data_for_icons.loc[index]["date_str"]
+                        print(f"Date type is {type(date)}")
                         icon = data_for_icons.loc[index]["icon"]
                         tile = col.container(height=120)
-                        tile.write(str(date))
                         tile.image(f"./icons/{icon}.png", width=55)
+                        tile.write(str(date))
                         index += 1
                 index = 0
