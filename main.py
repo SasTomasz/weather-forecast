@@ -24,22 +24,30 @@ if __name__ == '__main__':
             # TODO: Read this article https://docs.kanaries.net/topics/Streamlit/streamlit-columns
             if place:
                 data_for_icons = prepare_data_for_chart(days, place)
-                st.dataframe(data_for_icons)
+                data_length = len(data_for_icons)
+                print(f"Data length: {data_length}")
 
                 # Different layout idea
 
                 # Grid
-                rows = st.columns([3, 3, 3, 3])
+                rows = st.columns([3, 3, 3])
                 row1 = st.columns(3)
                 row2 = st.columns(3)
                 number = 0
+                index = 0
 
-                for i in range(24):
+                for i in range(data_length):
                     for col in rows:
+                        if index == data_length - 1:
+                            break
+                        date = data_for_icons.loc[index]["datetime"]
+                        # icon =
                         tile = col.container(height=120)
-                        tile.write("Text")
+                        tile.write(str(date))
                         tile.image("./icons/rain.png")
+                        index += 1
 
+                index = 0
                 # Metric
                 # col1, col2 = st.columns([2, 3])
                 # with col1:
