@@ -2,25 +2,31 @@ import streamlit as st
 
 from weather_data_operations import prepare_data_for_chart
 
+
+def set_subheader(choose_option, number_of_days, choose_place):
+    if number_of_days > 1:
+        day_str = "days"
+    else:
+        day_str = "day"
+    st.subheader(f"{choose_option} for the next {number_of_days} {day_str} in {choose_place}")
+
+
 if __name__ == '__main__':
     st.title("Weather Forecast for the Next Days")
     place = st.text_input("Place")
-    days = st.slider("Forecast Days", min_value=1, max_value=5)
+    days = st.slider("Forecast Days", min_value=1, max_value=15)
     option = st.selectbox("Select data to view", ("Temperature", "Sky"))
 
     match option:
         case "Temperature":
             if place:
-                if days > 1:
-                    day_str = "days"
-                else:
-                    day_str = "day"
-                st.header(f"Temperature for the next {days} {day_str} in {place}")
+                set_subheader(option, days, place)
                 data_for_chart = prepare_data_for_chart(days, place)
                 st.line_chart(data_for_chart, x="datetime", y="temperature")
 
         case "Sky":
             if place:
+                set_subheader(option, days, place)
                 data_for_icons = prepare_data_for_chart(days, place)
                 data_length = len(data_for_icons)
 
@@ -35,7 +41,6 @@ if __name__ == '__main__':
                             break
                         data_for_icons["date_str"] = data_for_icons["datetime"].dt.strftime('%a %H:%M')
                         date = data_for_icons.loc[index]["date_str"]
-                        print(f"Date type is {type(date)}")
                         icon = data_for_icons.loc[index]["icon"]
                         tile = col.container(height=120)
                         tile.image(f"./icons/{icon}.png", width=55)
