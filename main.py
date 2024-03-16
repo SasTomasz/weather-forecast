@@ -14,7 +14,7 @@ def set_subheader(choose_option, number_of_days, choose_place):
 if __name__ == '__main__':
     st.title("Weather Forecast for the Next Days")
     place = st.text_input("Place")
-    days = st.slider("Forecast Days", min_value=1, max_value=15)
+    days = st.slider("Forecast Days", min_value=1, max_value=15, help="Set how many days You want to show")
     option = st.selectbox("Select data to view", ("Temperature", "Sky"))
 
     match option:
