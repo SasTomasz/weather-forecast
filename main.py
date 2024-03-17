@@ -1,4 +1,5 @@
 import streamlit as st
+import plotly.express as px
 
 from weather_data_operations import prepare_data_for_chart
 
@@ -22,7 +23,10 @@ if __name__ == '__main__':
             if place:
                 set_subheader(option, days, place)
                 data_for_chart = prepare_data_for_chart(days, place)
-                st.line_chart(data_for_chart, x="datetime", y="temperature")
+
+                # Plotly
+                figure = px.line(data_for_chart, x="datetime", y="temperature", labels={"datetime": "Date", "temperature": "Temperature [C]"})
+                st.plotly_chart(figure)
 
         case "Sky":
             if place:
