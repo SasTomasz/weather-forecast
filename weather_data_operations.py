@@ -43,15 +43,18 @@ def get_demand_data(period, area):
         demand_data = data["days"][:period]
         demand_data = transform_data(demand_data)
     else:
-        return "There is no data available"
+        return None
     return demand_data
 
 
 def prepare_data_for_chart(period, area):
     data = get_demand_data(period, area)
-    convert_json_to_csv(data)
-    df = pd.read_csv("./data/weather_data.csv", parse_dates=["datetime"])
-    return df
+    if data:
+        convert_json_to_csv(data)
+        df = pd.read_csv("./data/weather_data.csv", parse_dates=["datetime"])
+        return df
+    else:
+        return None
 
 
 def convert_json_to_csv(json_data):
@@ -72,5 +75,6 @@ def convert_json_to_csv(json_data):
 
 
 if __name__ == "__main__":
-    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-    print(chart_data)
+    # chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+    # print(chart_data)
+    prepare_data_for_chart(5, "Krakówx")
